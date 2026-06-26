@@ -18,7 +18,7 @@
 ![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/serveur/toues%20les%20commandes.png)
 
 
-## 2. Gérant
+## 3. Gérant
 ## Produit
 ![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/produit.png)
 ## Categorie
