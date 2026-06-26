@@ -28,7 +28,7 @@ server.decorate("authenticate", async (request: any, reply: any) => {
   try {
     await request.jwtVerify();
   } catch (err) {
-    reply.status(401).send({ message: "Non authentifié" });
+    return reply.status(401).send({ message: "Non authentifié" });
   }
 });
 
@@ -41,7 +41,12 @@ server.decorate("requireRole", (...roles: string[]) => {
   };
 });
 
-await server.register(cors, { origin: true });
+await server.register(cors, {
+  origin: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+});
 await server.register(jwt, { secret: process.env.JWT_SECRET || "fallback-secret" });
 
 await server.register(authRoutes, { prefix: "/api/auth" });

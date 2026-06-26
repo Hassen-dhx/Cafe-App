@@ -1,10 +1,10 @@
 ==========================================================
 APPLICATION MOBILE POUR UN CAFÉ
-Représentation textuelle UML
+Représentation textuelle UML - VERSION IMPLÉMENTÉE
 ==========================================================
 
 ----------------------------------------------------------
-1. DIAGRAMME DE CAS D'UTILISATION
+1. DIAGRAMME DE CAS D'UTILISATION (IMPLÉMENTÉ)
 ----------------------------------------------------------
 
 ### Acteurs
@@ -15,264 +15,287 @@ Représentation textuelle UML
 
 ---
 
-## CLIENT
+## CLIENT ✅
 
-* S'inscrire
-* Se connecter
-* Consulter le menu
-* Rechercher un produit
-* Consulter les détails d'un produit
-* Ajouter un produit au panier
-* Modifier le panier
-* Supprimer un produit du panier
-* Personnaliser une commande
-* Réserver une table
-* Passer une commande
-* Payer la commande
-* Suivre l'état de la commande
-* Consulter l'historique des commandes
-* Donner une évaluation
-
----
-
-## SERVEUR
-
-* Se connecter
-* Consulter les commandes
-* Accepter une commande
-* Préparer une commande
-* Marquer une commande comme prête
-* Servir une commande
-* Mettre à jour le statut d'une commande
-* Consulter les commandes terminées
+* S'inscrire ✅
+* Se connecter ✅
+* Consulter le menu (public, sans compte) ✅
+* Rechercher un produit ✅
+* Consulter les détails d'un produit ✅
+* Ajouter un produit au panier ✅
+* Modifier le panier (quantité +/-) ✅
+* Supprimer un produit du panier ✅
+* Vider le panier ✅
+* Réserver une table ✅
+* Passer une commande ✅
+* Payer la commande (simulé) ✅
+* Suivre l'état de la commande ✅
+* Consulter l'historique des commandes ✅
+* Donner une évaluation ✅
+* Modifier son profil ✅
 
 ---
 
-## GÉRANT
+## SERVEUR ✅
 
-* Se connecter
-* Ajouter un produit
-* Modifier un produit
-* Supprimer un produit
-* Gérer les catégories
-* Gérer les utilisateurs
-* Gérer les serveurs
-* Gérer les réservations
-* Gérer les promotions
-* Consulter les ventes
-* Consulter les statistiques
+* Se connecter ✅
+* Consulter les commandes en attente ✅
+* Accepter une commande ✅
+* Préparer une commande ✅
+* Marquer une commande comme prête ✅
+* Servir une commande ✅
+* Mettre à jour le statut d'une commande ✅
+* Consulter toutes ses commandes (historique) ✅
+* Voir son profil (Mon compte) ✅
 
+---
+
+## GÉRANT ✅
+
+* Se connecter ✅
+* Ajouter un produit ✅
+* Modifier un produit ✅
+* Supprimer un produit ✅
+* Gérer les catégories (CRUD) ✅
+* Gérer les utilisateurs (voir, changer rôle, supprimer) ✅
+* Gérer les serveurs (assigner rôle) ✅
+* Gérer les réservations (voir, confirmer, annuler) ✅
+* Gérer les promotions (CRUD) ✅
+* Consulter les statistiques de vente ✅
+
+---
 
 ----------------------------------------------------------
-2. DIAGRAMME DE CLASSES
+2. DIAGRAMME DE CLASSES (SCHEMA PRISMA IMPLÉMENTÉ)
 ----------------------------------------------------------
 
-## Classe : Utilisateur
+## User
+* id: Int @id @default(autoincrement())
+* nom: String
+* prenom: String
+* email: String @unique
+* motDePasse: String
+* telephone: String?
+* role: Role @default(CLIENT)  // CLIENT, SERVEUR, GERANT
+* adresse: String?
+* matricule: String?
+* createdAt: DateTime @default(now())
+* updatedAt: DateTime @updatedAt
 
-Attributs
-
-* id : int
-* nom : String
-* prénom : String
-* email : String
-* motDePasse : String
-* téléphone : String
-
-Méthodes
-
-* seConnecter()
-* seDéconnecter()
-
----
-
-Classe : Client
-Hérite de Utilisateur
-
-Attributs
-
-* adresse : String
-
-Méthodes
-
-* passerCommande()
-* réserverTable()
-* payerCommande()
-* consulterHistorique()
-* donnerAvis()
+Relations:
+* clientOrders: Order[] @relation("ClientOrders")
+* serveurOrders: Order[] @relation("ServeurOrders")
+* reservations: Reservation[]
+* reviews: Review[]
 
 ---
 
-Classe : Serveur
-Hérite de Utilisateur
-
-Attributs
-
-* matricule : String
-
-Méthodes
-
-* accepterCommande()
-* préparerCommande()
-* servirCommande()
-* modifierStatutCommande()
+## Category
+* id: Int @id @default(autoincrement())
+* nom: String @unique
+* products: Product[]
 
 ---
 
-Classe : Gérant
-Hérite de Utilisateur
-
-Méthodes
-
-* ajouterProduit()
-* modifierProduit()
-* supprimerProduit()
-* gérerCatégorie()
-* gérerPromotion()
-* consulterStatistiques()
-
----
-
-Classe : Produit
-
-Attributs
-
-* idProduit : int
-* nom : String
-* description : String
-* prix : Decimal
-* disponibilité : boolean
-
-Méthodes
-
-* afficherProduit()
-* modifierPrix()
+## Product
+* id: Int @id @default(autoincrement())
+* nom: String
+* description: String?
+* prix: Float
+* disponibilite: Boolean @default(true)
+* imageUrl: String?
+* categoryId: Int
+* category: Category @relation(fields: [categoryId], references: [id])
+* orderLines: OrderLine[]
+* reviews: Review[]
 
 ---
 
-Classe : Catégorie
-
-Attributs
-
-* idCategorie : int
-* nom : String
-
-Méthodes
-
-* ajouterProduit()
-* supprimerProduit()
-
----
-
-Classe : Commande
-
-Attributs
-
-* idCommande : int
-* dateCommande : Date
-* statut : String
-* montantTotal : Decimal
-
-Méthodes
-
-* ajouterProduit()
-* supprimerProduit()
-* calculerTotal()
-* modifierStatut()
+## Order
+* id: Int @id @default(autoincrement())
+* dateCommande: DateTime @default(now())
+* statut: OrderStatus @default(EN_ATTENTE)  // EN_ATTENTE, ACCEPTEE, EN_PREPARATION, PRETE, SERVIE, PAYEE
+* montantTotal: Float @default(0)
+* clientId: Int
+* serveurId: Int?
+* client: User @relation("ClientOrders", fields: [clientId], references: [id])
+* serveur: User? @relation("ServeurOrders", fields: [serveurId], references: [id])
+* orderLines: OrderLine[]
+* payment: Payment?
 
 ---
 
-Classe : LigneCommande
-
-Attributs
-
-* quantité : int
-* prixUnitaire : Decimal
-
-Méthodes
-
-* calculerSousTotal()
+## OrderLine
+* id: Int @id @default(autoincrement())
+* quantite: Int @default(1)
+* prixUnitaire: Float
+* commandeId: Int
+* produitId: Int
+* commande: Order @relation(fields: [commandeId], references: [id])
+* produit: Product @relation(fields: [produitId], references: [id])
 
 ---
 
-Classe : Paiement
-
-Attributs
-
-* idPaiement : int
-* montant : Decimal
-* modePaiement : String
-* datePaiement : Date
-* statut : String
-
-Méthodes
-
-* effectuerPaiement()
-* confirmerPaiement()
+## Payment
+* id: Int @id @default(autoincrement())
+* montant: Float
+* modePaiement: String
+* datePaiement: DateTime @default(now())
+* statut: PaymentStatus @default(EN_ATTENTE)  // EN_ATTENTE, EFFECTUE, ECHOUE, REMBOURSE
+* commandeId: Int @unique
+* commande: Order @relation(fields: [commandeId], references: [id])
 
 ---
 
-Classe : Réservation
-
-Attributs
-
-* idReservation : int
-* date : Date
-* heure : Heure
-* nombrePersonnes : int
-* statut : String
-
-Méthodes
-
-* confirmerReservation()
-* annulerReservation()
+## Reservation
+* id: Int @id @default(autoincrement())
+* date: DateTime
+* heure: String
+* nombrePersonnes: Int
+* statut: ReservationStatus @default(EN_ATTENTE)  // EN_ATTENTE, CONFIRMEE, ANNULEE
+* clientId: Int
+* client: User @relation(fields: [clientId], references: [id])
 
 ---
 
-Classe : Avis
+## Review
+* id: Int @id @default(autoincrement())
+* note: Int
+* commentaire: String?
+* dateAvis: DateTime @default(now())
+* clientId: Int
+* produitId: Int
+* client: User @relation(fields: [clientId], references: [id])
+* produit: Product @relation(fields: [produitId], references: [id])
+* @@unique([clientId, produitId])
 
-Attributs
+---
 
-* idAvis : int
-* note : int
-* commentaire : String
-* dateAvis : Date
+## Promotion
+* id: Int @id @default(autoincrement())
+* description: String
+* type: String  // POURCENTAGE, MONTANT_FIXE
+* valeur: Float
+* dateDebut: DateTime
+* dateFin: DateTime
 
-Méthodes
+---
 
-* publierAvis()
+## Enums
+* Role: CLIENT, SERVEUR, GERANT
+* OrderStatus: EN_ATTENTE, ACCEPTEE, EN_PREPARATION, PRETE, SERVIE, PAYEE
+* PaymentStatus: EN_ATTENTE, EFFECTUE, ECHOUE, REMBOURSE
+* ReservationStatus: EN_ATTENTE, CONFIRMEE, ANNULEE
 
-==========================================================
-3. RELATIONS ENTRE LES CLASSES
-==============================
+---
 
-Utilisateur
-│
-├── Client
-├── Serveur
-└── Gérant
+----------------------------------------------------------
+3. ARCHITECTURE TECHNIQUE IMPLÉMENTÉE
+----------------------------------------------------------
 
-Client (1) -------- (0..*) Commande
+### Backend (Fastify + TypeScript + Prisma + PostgreSQL)
+* Framework: Fastify v5
+* ORM: Prisma Client v7 avec adapter PostgreSQL (@prisma/adapter-pg)
+* Auth: JWT (@fastify/jwt) + bcryptjs
+* Validation: Zod
+* CORS: @fastify/cors (configuré pour web et mobile)
+* Structure: Routes modulaires par domaine
 
-Commande (1) -------- (1..*) LigneCommande
+### Frontend (React Native + Expo Router + TypeScript)
+* Framework: Expo SDK 56 / React Native 0.85
+* Navigation: Expo Router v3 (file-based routing)
+* State: React Context (AuthContext, CartContext)
+* API: Fetch natif avec token Bearer
+* Icons: @expo/vector-icons (MaterialIcons)
+* Safe Area: react-native-safe-area-context
+* Storage: @react-native-async-storage/async-storage
 
-LigneCommande (* ) -------- (1) Produit
+### Structure de navigation (Expo Router)
+```
+app/
+├── _layout.tsx              # Root + SafeAreaProvider + FAB panier
+├── index.tsx                # Redirection vers /menu
+├── menu.tsx                 # Menu public (catégories, recherche, FAB)
+├── product/[id].tsx         # Détail produit + avis
+├── (auth)/
+│   ├── login.tsx            # Connexion + redirection par rôle
+│   └── register.tsx         # Inscription (CLIENT uniquement)
+├── (client)/
+│   ├── _layout.tsx          # Guards + tabs (Panier, Commandes, Réservations, Profil)
+│   ├── cart.tsx             # Panier avec +/- quantité, supprimer, commander
+│   ├── orders.tsx           # Historique commandes client
+│   ├── reservations.tsx     # Réservations client
+│   └── profile.tsx          # Profil + "Voir le menu"
+├── (serveur)/
+│   ├── _layout.tsx          # Guards + tabs (Commandes, Mon compte)
+│   ├── orders.tsx           # Commandes : accepter, préparer, servir
+│   └── profile.tsx          # Profil serveur
+└── (gerant)/
+    ├── _layout.tsx          # Guards + tabs (Produits, Catégories, Utilisateurs, Réservations, Promotions, Stats)
+    ├── products.tsx         # CRUD produits
+    ├── categories.tsx       # CRUD catégories
+    ├── users.tsx            # Gestion utilisateurs + rôles
+    ├── reservations.tsx     # Réservations + confirmation
+    ├── promotions.tsx       # CRUD promotions
+    └── stats.tsx            # Statistiques ventes
+```
 
-Produit (* ) -------- (1) Catégorie
+### API Endpoints (tous préfixés /api)
+* Auth: POST /auth/register, POST /auth/login, GET /auth/me
+* Products: GET/POST /products, GET/PUT/DELETE /products/:id
+* Categories: GET/POST /categories, GET/PUT/DELETE /categories/:id
+* Orders: POST /orders (CLIENT), GET /orders, GET /orders/en-attente (SERVEUR), GET /orders/:id, PATCH /orders/:id/statut (SERVEUR/GERANT)
+* Reservations: POST /reservations (CLIENT), GET /reservations, PATCH /reservations/:id (GERANT), DELETE /reservations/:id
+* Payments: POST /payments (CLIENT), GET /payments (GERANT)
+* Reviews: POST /reviews (CLIENT), GET /reviews?produitId=
+* Promotions: GET/POST /promotions, GET/PUT/DELETE /promotions/:id
+* Users: GET /users (GERANT), PUT/DELETE /users/:id (GERANT)
+* Stats: GET /stats (GERANT)
 
-Commande (1) -------- (1) Paiement
+---
 
-Client (1) -------- (0..*) Réservation
+----------------------------------------------------------
+4. COMPTES DE DÉMARRAGE (SEED)
+----------------------------------------------------------
 
-Client (1) -------- (0..*) Avis
+* Gérant: gerant@cafe.com / password123
+* Serveur: serveur@cafe.com / password123  
+* Client: client@cafe.com / password123
 
-Produit (1) -------- (0..*) Avis
+---
 
-Serveur (1) -------- (0..*) Commande
+----------------------------------------------------------
+5. FLUX PRINCIPAUX
+----------------------------------------------------------
 
-Gérant gère :
+### Commande Client
+1. Client parcourt /menu (public)
+2. Ajoute au panier → demande connexion si non connecté
+3. Va au panier (/client/cart) → modifie quantités +/- 
+4. "Passer la commande" → crée Order EN_ATTENTE
+5. Serveur voit commande dans "En attente" → "Accepter" → ACCEPTEE
+6. Serveur "Préparation" → EN_PREPARATION
+7. Serveur "Marquer prête" → PRETE
+8. Serveur "Servir" → SERVIE
+9. Client paie → PAYEE
 
-* Produit
-* Catégorie
-* Utilisateur
-* Promotion
-* Réservation
+### Réservation
+1. Client crée réservation → EN_ATTENTE
+2. Gérant confirme/annule → CONFIRMEE/ANNULEE
+
+### Promotions
+1. Gérant crée promotion (pourcentage/montant, dates)
+2. Appliquée côté backend lors du calcul
+
+---
+
+----------------------------------------------------------
+6. SÉCURITÉ & GUARDS
+----------------------------------------------------------
+
+* JWT dans Authorization header (Bearer token)
+* Roles vérifiés côté backend (preHandler requireRole)
+* Côté frontend: layouts (client)/(serveur)/(gerant) redirigent si rôle incorrect
+* Token stocké dans AsyncStorage, rechargé au démarrage
+* Mot de passe hashé bcrypt (cost 10)
+* CORS configuré pour Expo web (localhost:8081) et mobile

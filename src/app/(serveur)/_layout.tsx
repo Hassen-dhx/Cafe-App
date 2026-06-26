@@ -15,7 +15,18 @@ export default function ServeurLayout() {
         name="orders"
         options={{
           title: "Commandes",
-          tabBarIcon: ({ color, size }) => <MaterialIcons name="receipt-long" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="receipt-long" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Mon compte",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="person" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
