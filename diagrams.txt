@@ -1,0 +1,278 @@
+==========================================================
+APPLICATION MOBILE POUR UN CAFÉ
+Représentation textuelle UML
+==========================================================
+
+----------------------------------------------------------
+1. DIAGRAMME DE CAS D'UTILISATION
+----------------------------------------------------------
+
+### Acteurs
+
+* Client
+* Serveur
+* Gérant
+
+---
+
+## CLIENT
+
+* S'inscrire
+* Se connecter
+* Consulter le menu
+* Rechercher un produit
+* Consulter les détails d'un produit
+* Ajouter un produit au panier
+* Modifier le panier
+* Supprimer un produit du panier
+* Personnaliser une commande
+* Réserver une table
+* Passer une commande
+* Payer la commande
+* Suivre l'état de la commande
+* Consulter l'historique des commandes
+* Donner une évaluation
+
+---
+
+## SERVEUR
+
+* Se connecter
+* Consulter les commandes
+* Accepter une commande
+* Préparer une commande
+* Marquer une commande comme prête
+* Servir une commande
+* Mettre à jour le statut d'une commande
+* Consulter les commandes terminées
+
+---
+
+## GÉRANT
+
+* Se connecter
+* Ajouter un produit
+* Modifier un produit
+* Supprimer un produit
+* Gérer les catégories
+* Gérer les utilisateurs
+* Gérer les serveurs
+* Gérer les réservations
+* Gérer les promotions
+* Consulter les ventes
+* Consulter les statistiques
+
+
+----------------------------------------------------------
+2. DIAGRAMME DE CLASSES
+----------------------------------------------------------
+
+## Classe : Utilisateur
+
+Attributs
+
+* id : int
+* nom : String
+* prénom : String
+* email : String
+* motDePasse : String
+* téléphone : String
+
+Méthodes
+
+* seConnecter()
+* seDéconnecter()
+
+---
+
+Classe : Client
+Hérite de Utilisateur
+
+Attributs
+
+* adresse : String
+
+Méthodes
+
+* passerCommande()
+* réserverTable()
+* payerCommande()
+* consulterHistorique()
+* donnerAvis()
+
+---
+
+Classe : Serveur
+Hérite de Utilisateur
+
+Attributs
+
+* matricule : String
+
+Méthodes
+
+* accepterCommande()
+* préparerCommande()
+* servirCommande()
+* modifierStatutCommande()
+
+---
+
+Classe : Gérant
+Hérite de Utilisateur
+
+Méthodes
+
+* ajouterProduit()
+* modifierProduit()
+* supprimerProduit()
+* gérerCatégorie()
+* gérerPromotion()
+* consulterStatistiques()
+
+---
+
+Classe : Produit
+
+Attributs
+
+* idProduit : int
+* nom : String
+* description : String
+* prix : Decimal
+* disponibilité : boolean
+
+Méthodes
+
+* afficherProduit()
+* modifierPrix()
+
+---
+
+Classe : Catégorie
+
+Attributs
+
+* idCategorie : int
+* nom : String
+
+Méthodes
+
+* ajouterProduit()
+* supprimerProduit()
+
+---
+
+Classe : Commande
+
+Attributs
+
+* idCommande : int
+* dateCommande : Date
+* statut : String
+* montantTotal : Decimal
+
+Méthodes
+
+* ajouterProduit()
+* supprimerProduit()
+* calculerTotal()
+* modifierStatut()
+
+---
+
+Classe : LigneCommande
+
+Attributs
+
+* quantité : int
+* prixUnitaire : Decimal
+
+Méthodes
+
+* calculerSousTotal()
+
+---
+
+Classe : Paiement
+
+Attributs
+
+* idPaiement : int
+* montant : Decimal
+* modePaiement : String
+* datePaiement : Date
+* statut : String
+
+Méthodes
+
+* effectuerPaiement()
+* confirmerPaiement()
+
+---
+
+Classe : Réservation
+
+Attributs
+
+* idReservation : int
+* date : Date
+* heure : Heure
+* nombrePersonnes : int
+* statut : String
+
+Méthodes
+
+* confirmerReservation()
+* annulerReservation()
+
+---
+
+Classe : Avis
+
+Attributs
+
+* idAvis : int
+* note : int
+* commentaire : String
+* dateAvis : Date
+
+Méthodes
+
+* publierAvis()
+
+==========================================================
+3. RELATIONS ENTRE LES CLASSES
+==============================
+
+Utilisateur
+│
+├── Client
+├── Serveur
+└── Gérant
+
+Client (1) -------- (0..*) Commande
+
+Commande (1) -------- (1..*) LigneCommande
+
+LigneCommande (* ) -------- (1) Produit
+
+Produit (* ) -------- (1) Catégorie
+
+Commande (1) -------- (1) Paiement
+
+Client (1) -------- (0..*) Réservation
+
+Client (1) -------- (0..*) Avis
+
+Produit (1) -------- (0..*) Avis
+
+Serveur (1) -------- (0..*) Commande
+
+Gérant gère :
+
+* Produit
+* Catégorie
+* Utilisateur
+* Promotion
+* Réservation
