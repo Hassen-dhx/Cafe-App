@@ -1,4 +1,4 @@
-# Guide d'initialisation - Application Café
+# Application Café
 
 ## 1. Client
 
@@ -46,11 +46,9 @@
 
 ![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/utilisateurs.png)
 
-# Application Mobile pour un Café
+---
 
 ## Représentation textuelle UML
-
----
 
 # 1. Diagramme de cas d'utilisation
 
@@ -59,8 +57,6 @@
 - Client
 - Serveur
 - Gérant
-
----
 
 ## Client
 
@@ -401,6 +397,10 @@
               ▼
           Category
 ```
+
+---
+
+# Guide d'initialisation - Application Café
 
 ## 📋 Prérequis
 
