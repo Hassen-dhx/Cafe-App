@@ -1,5 +1,35 @@
 # Guide d'initialisation - Application Café
 
+#1. Client
+#Consultation Menu
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/client/3%20panier.png)
+#login
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/login.png)
+#Mon panier
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/client/mon%20panier.png)
+#Mes Commandes
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/client/mes%20commandes.png)
+
+
+#2. Serveur
+#Commandes en attente
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/serveur/commandes%20en%20attente.png)
+#Toues les commandes
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/serveur/toues%20les%20commandes.png)
+
+
+#2. Gérant
+#Produit
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/produit.png)
+#Categorie
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/cat%C3%A9gorie.png)
+#Statistiques
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/statistiques.png)
+#Produit
+![Image Alt](https://github.com/Hassen-dhx/Cafe-App/blob/885e0f9bcebf2fb92cceeebe3f536e5bc021dc40/cafe-app%20images/gerant/utilisateurs.png)
+
+
+
 ## Prérequis
 
 - **Node.js** ≥ 20
