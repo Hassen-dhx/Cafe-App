@@ -30,12 +30,32 @@
 
 
 
-## Prérequis
+## 📋 Prérequis
 
-- **Node.js** ≥ 20
-- **PostgreSQL** ≥ 14 (local ou Docker)
-- **Expo CLI** : `npm install -g expo-cli`
+[![Node.js Version][node-version-image]][node-url]
+[![PostgreSQL Version][postgresql-version-image]][postgresql-url]
+[![Expo CLI][expo-cli-image]][expo-cli-url]
+[![Git][git-image]][git-url]
+
+---
+
+- **Node.js** ≥ 20  
+- **PostgreSQL** ≥ 14 (local ou Docker)  
+- **Expo CLI** : `npm install -g expo-cli`  
 - **Git**
+
+<!-- Badges references -->
+[node-version-image]: https://img.shields.io/badge/node-%3E%3D20-green.svg
+[node-url]: https://nodejs.org/
+
+[postgresql-version-image]: https://img.shields.io/badge/postgresql-%3E%3D14-blue.svg
+[postgresql-url]: https://www.postgresql.org/
+
+[expo-cli-image]: https://img.shields.io/badge/expo%20cli-global-orange.svg
+[expo-cli-url]: https://docs.expo.dev/workflow/expo-cli/
+
+[git-image]: https://img.shields.io/badge/git-latest-lightgrey.svg
+[git-url]: https://git-scm.com/
 
 ---
 
